@@ -10,6 +10,20 @@ const directorsRouter = require('./routes/directors');
 
 const app = express();
 
+const mongoose = require('mongoose');
+
+// mongodb://<dbUser>?:<dbPass>?@<url>:<port>/<dbName>
+const url = "mongodb://localhost:27017/video-club";
+mongoose.connect(url);
+const db = mongoose.connection;
+db.on('open',()=>{
+  console.log("Conexión OK");
+});
+
+db.on('error',()=>{
+  console.log("NO se ha podido conectar");
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -37,7 +51,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error');27017
 });
 
 module.exports = app;
