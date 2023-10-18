@@ -16,8 +16,9 @@ const userModel = require('./models/user');
     4) Objeto de configuración ORM
 */
 
-const sequelize = new Sequelize('dbVideoClub', 'root', 'abcd1234', {
-    host: 'localhost',
+const sequelize = new Sequelize('railway', 'root', 'J0PgXdbMH379LYdfkLqN', {
+    host: 'containers-us-west-92.railway.app',
+    port: 6436,
     dialect: 'mysql'
 });
 
