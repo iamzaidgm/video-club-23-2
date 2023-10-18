@@ -12,7 +12,7 @@ se debe subir en una rama distinta a la rama master.
 ## Instalación 
 
 - Clonar el repositorio:
-  git clone https://gitlab.com/hi7114906/mi-primera-api-con-express-orm
+  git clone git@gitlab.com:hi7114906/mi-primera-api-con-express-orm.git 
 
 - Después se instala en terminal:
   npm install
