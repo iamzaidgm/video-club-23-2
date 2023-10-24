@@ -1,41 +1,41 @@
 const express = require('express');
-const Director = require('../models/director');
+const Actor = require('../models/actor');
 
 function create(req, res, next){
     const name = req.body.name;
     const lastName = req.body.lastName;
 
-    let Director = new Director({
+    let Actor = new Actor({
         name:name, lastName:lastName
     });
 
-    Director.save().then(obj => res.status(200).json({
-        message:"Director creado correctamente", 
+    actor.save().then(obj => res.status(200).json({
+        message:"Actor creado correctamente", 
         obj:obj
     })).catch(ex => res.status(500).json({
-        message:"No se pudo almacenar al director",
+        message:"No se pudo almacenar al actor",
         obj:ex
     }));  
 
 }
 
 function list(req, res, next) {
-    Director.find().then(objs => res.status(200).json({
-        message: "Lista de directores",
+    Actor.find().then(objs => res.status(200).json({
+        message: "Lista de actores",
         obj:objs
     })).catch(ex => res.status(500).json({
-        message:"No se pudo comsultar la lista de directores",
+        message:"No se pudo consultar la lista de actores",
         obj: ex
     }));
   }
 
 function index(req, res, next){
     const id = req.params.id;
-    Director.findOne({"_id":id}).then(obj => res.status(200).json({
-        msg: `Director con el id ${id}`,
+    Actor.findOne({"_id":id}).then(obj => res.status(200).json({
+        msg: `Actor con el id ${id}`,
         obj: obj
     })).catch(ex => res.status(500).json({
-        msg:"No se pudo consultar el director",
+        msg:"No se pudo consultar el Actor",
         obj: ex
     }));
 }
@@ -45,17 +45,17 @@ function replace(req, res, next){
     let name = req.body.name ? req.body.name : "";
     let lastName = req.body.lastName ? req.body.lastName : "";
 
-    let director = new Object({
+    let Actor = new Object({
         _name:name,
         _lastName:lastName
     });
 
-    Director.findOneAndUpdate({"_id":id}, director, {new: true})
+    Actor.findOneAndUpdate({"_id":id}, Actor, {new: true})
         .then(obj => res.status(200).json({
-            msg:"Director reemplazado correctamente", 
+            msg:"Actor reemplazado correctamente", 
             obj:obj
         })).catch(ex => res.status(500).json({
-            msg:"No se pudo reemplazar el director",
+            msg:"No se pudo reemplazar el Actor",
             obj: ex
         }));
 }
@@ -65,27 +65,27 @@ function update(req, res, next){
     let name = req.body.name;
     let lastName = req.body.lastName;
 
-    let director = new Object();
-    if(name) director._name = name;
-    if(lastName) director._lastName;
+    let Actor = new Object();
+    if(name) Actor._name = name;
+    if(lastName) Actor._lastName;
 
-    Director.findOneAndUpdate({"id":id}, director)
+    Actor.findOneAndUpdate({"id":id}, Actor)
         .then(obj => res.status(200).json({
-            msg:"Director actualizado correctamente", 
+            msg:"Actor actualizado correctamente", 
             obj:obj
         })).catch(ex => res.status(500).json({
-            msg:"No se pudo actualizar el director",
+            msg:"No se pudo actualizar el Actor",
             obj: ex
         }));
 }
 
 function destroy(req, res, next){
     const id = req.params.id;
-    Director.findByIdAndRemove({"_id":id}).then(obj => res.status(200).json({
-        msg:"Director borrado correctamente",
+    Actor.findByIdAndRemove({"_id":id}).then(obj => res.status(200).json({
+        msg:"Actor borrado correctamente",
         obj: obj
     })).catch(ex => res.status(500).json({
-        msg:"No se pudo eliminar el director",
+        msg:"No se pudo eliminar el Actor",
         obj: ex
     }));
 }

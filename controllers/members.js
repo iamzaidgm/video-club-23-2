@@ -1,23 +1,32 @@
 const express = require('express');
+const Member = require('')
 
 function create(req, res, next){
-    const name = req.body.name;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    const password = req.body.password;
+    let name = req.body.name;
+    let lastName = req.body.lastName;
+    let phone = req.body.phone;
+    
+    let address = new Object();
+    address.street = req.body.street;
+    address.number = req.body.number;
+    address.zip = req.body.zip;
+    address.city = req.body.city;
+    address.state = req.body.state;
+    address.country = req.body.country;
 
-    let User = new User({
-        name:name, lastName:lastName, email:email, password:password
+    let member = new Member({
+        name: name,
+        lastName: lastName,
+        phone: phone,
+        addresss: address
     });
 
-    User.save().then(obj => res.status(200).json({
-        message:"Usuario creado correctamente", 
-        obj:obj
+    member.save().then(obj => res.status(200).json({
+        msg: "Socio creado",
+        obj: obj
     })).catch(ex => res.status(500).json({
-        message:"No se pudo almacenar al usuario",
-        obj:ex
-    }));  
-
+        msg: "No se a podido crear el socio"
+    }));
 }
 
 function list(req, res, next) {
