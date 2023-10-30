@@ -4,14 +4,18 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const directorsRouter = require('./routes/directors');
 const actorsRouter = require('./routes/actors');
-
-const app = express();
+const genresRouter = require('./routes/genres');
+const membersRouter = require('./routes/members');
+const moviesRouter = require('./routes/movies');
 
 const mongoose = require('mongoose');
+
+const app = express();
 
 // mongodb://<dbUser>?:<dbPass>?@<url>:<port>/<dbName>
 const url = "mongodb://localhost:27017/video-club";
@@ -35,10 +39,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// middlewares de enrutamiento
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/directors', directorsRouter);
 app.use('/actors', actorsRouter);
+app.use('/genres', genresRouter);
+app.use('/members',membersRouter);
+app.use('/movies',moviesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

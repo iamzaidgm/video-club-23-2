@@ -1,42 +1,33 @@
 const express = require('express');
-const Member = require('../models/member');
+const Director = require('../models/director');
+const Movie = require('../models/movie');
 
-function create(req, res, next){
-    let name = req.body.name;
-    let lastName = req.body.lastName;
-    let phone = req.body.phone;
+async function create(req, res, next){
+    const title = req.body.title;
+    const directorId = rq.body.directorId;
 
-    let address = new Object();
-    address.street = req.body.street;
-    address.number = req.body.number;
-    address.zip = req.body.zip;
-    address.city = req.body.city;
-    address.state = req.body.state;
-    address.country = req.body.country;
-
-    let member = new Member({
-        name: name,
-        lastName: lastName,
-        phone: phone,
-        address: address
+    let director = await Director.findOne({"_id": directorId});
+    let movie = new Movie({
+        title: title,
+        director: director
     });
 
-    member.save().then(obj => res.status(200).json({
-        message: "Socio creado correctamente",
-        obj: obj
+    movie.save().then(obj => res.status(200).json({
+        msg:"Pelicula almacenado correctamente",
+        obj:obj
     })).catch(ex => res.status(500).json({
-        message:"No se pudo almacenar el socios",
+        msg: "No se pudo crear la pelicula",
         obj: ex
     }));
 }
 
 function list(req, res, next) {
-    User.find().then(objs => res.status(200).json({
-        message:"Lista de usuarios",
-        obj:objs
+    Movie.find().populate("_director").then(obj => res.status(200).json({
+        msg:"Lista de peliculas",
+        obj:obj
     })).catch(ex => res.status(500).json({
-        message:"No se puedo consultar la lista de usuarios",
-        obj:ex
+        msg: "No se pudo encontrar la  lista de peliculas",
+        obj: ex
     }));
 }
 

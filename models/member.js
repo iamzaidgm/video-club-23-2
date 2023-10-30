@@ -19,7 +19,7 @@ class Member {
         this._name = name;
         this._lastName = lastName;
         this._phone = phone;
-        this._address;
+        this._address = address;
     }
 
     get name(){
