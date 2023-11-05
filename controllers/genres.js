@@ -1,10 +1,13 @@
 const express = require('express');
+const Genre = require('../models/genre');
 
 function create(req, res, next){
-    const _description = req.body._description;
+    const description = req.body.description;
+    const status = req.body.status;
 
     let Genre = new Genre({
-        _description:_description
+        description:description,
+        status:status
     });
 
     Genre.save().then(obj => res.status(200).json({
@@ -40,10 +43,12 @@ function index(req, res, next){
 
 function replace(req, res, next){
     const id = req.params.id;
-    let _description = req.body._description ? req.body._description : "";
+    let description = req.body.description ? req.body.description : "";
+    let status = req.body.status ? req.body.status : "";
 
     let Genre = new Object({
-        __description:_description,
+        _description: description,
+        _status: status
     });
 
     Genre.findOneAndUpdate({"_id":id}, Genre, {new: true})
@@ -58,10 +63,12 @@ function replace(req, res, next){
 
 function update(req, res, next){
     const id = req.params.id;
-    let _description = req.body._description;
+    let description = req.body._description;
+    let status = req.body._status;
 
     let Genre = new Object();
-    if(_description) Genre.__description = _description;
+    if(description) Genre.__description = description;
+    if(status) Genre.__status = status;
 
     Genre.findOneAndUpdate({"id":id}, Genre)
         .then(obj => res.status(200).json({
@@ -75,8 +82,9 @@ function update(req, res, next){
 
 function destroy(req, res, next){
     const id = req.params.id;
+
     Genre.findByIdAndRemove({"_id":id}).then(obj => res.status(200).json({
-        msg:"Genero borrado correctamente",
+        msg:"Genero eliminado correctamente",
         obj: obj
     })).catch(ex => res.status(500).json({
         msg:"No se pudo eliminar el Genero",

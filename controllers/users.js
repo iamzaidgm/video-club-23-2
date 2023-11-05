@@ -1,4 +1,6 @@
 const express = require('express');
+const User = require('../models/user');
+
 
 function create(req, res, next){
     const name = req.body.name;
@@ -7,7 +9,10 @@ function create(req, res, next){
     const password = req.body.password;
 
     let User = new User({
-        name:name, lastName:lastName, email:email, password:password
+        name:name,
+        lastName:lastName,
+        email:email,
+        password:password
     });
 
     User.save().then(obj => res.status(200).json({
@@ -21,17 +26,26 @@ function create(req, res, next){
 }
 
 function list(req, res, next) {
-    User.find().then(objs => res.status(200).json({
-        message: "Lista de usuarios",
-        obj:objs
-    })).catch(ex => res.status(500).json({
-        message:"No se pudo consultar la lista de usuarios",
-        obj: ex
-    }));
-  }
+    let page = req.params.page ? req.params.page : 1;
+
+    const options = {
+        page: page,
+        limit: 5
+    }
+
+    User.paginate({}, options)
+        .then(objects => res.status(200).json({
+            message: "Users list",
+            obj: objects
+        })).catch(ex => res.status(500).json({
+            message: "Users list could not be showed",
+            obj: ex
+        }));
+}
 
 function index(req, res, next){
     const id = req.params.id;
+
     User.findOne({"_id":id}).then(obj => res.status(200).json({
         msg: `Usuario con el id ${id}`,
         obj: obj
@@ -90,6 +104,7 @@ function update(req, res, next){
 
 function destroy(req, res, next){
     const id = req.params.id;
+    
     User.findByIdAndRemove({"_id":id}).then(obj => res.status(200).json({
         msg:"Usuario borrado correctamente",
         obj: obj

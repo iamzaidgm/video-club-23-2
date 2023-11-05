@@ -6,7 +6,8 @@ function create(req, res, next){
     const lastName = req.body.lastName;
 
     let Director = new Director({
-        name:name, lastName:lastName
+        name:name, 
+        lastName:lastName
     });
 
     Director.save().then(obj => res.status(200).json({
@@ -21,10 +22,12 @@ function create(req, res, next){
 
 function list(req, res, next) {
     let page = req.params.page? req.params.page :1;
+
     const options = {
         page:page,
         limit:5
     };
+
     Director.paginate({},options).then(objs => res.status(200).json({
         message: "Lista de directores",
         obj:objs
@@ -36,6 +39,7 @@ function list(req, res, next) {
 
 function index(req, res, next){
     const id = req.params.id;
+
     Director.findOne({"_id":id}).then(obj => res.status(200).json({
         msg: `Director con el id ${id}`,
         obj: obj
@@ -86,6 +90,7 @@ function update(req, res, next){
 
 function destroy(req, res, next){
     const id = req.params.id;
+    
     Director.findByIdAndRemove({"_id":id}).then(obj => res.status(200).json({
         msg:"Director borrado correctamente",
         obj: obj
