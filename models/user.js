@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 // Schema
 const schema = mongoose.Schema({
@@ -51,4 +52,5 @@ class User {
 }
 
 schema.loadClass(User);
+schema.plugin(mongoosePaginate);
 module.exports = mongoose.model('User', schema)

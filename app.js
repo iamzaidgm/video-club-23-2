@@ -12,7 +12,7 @@ const actorsRouter = require('./routes/actors');
 const genresRouter = require('./routes/genres');
 const membersRouter = require('./routes/members');
 const moviesRouter = require('./routes/movies');
-const awaitListsRouter = require('./routes/AwaitLists');
+const awaitListsRouter = require('./routes/awaitLists');
 const bookingRouter = require('./routes/bookings');
 
 const mongoose = require('mongoose');
