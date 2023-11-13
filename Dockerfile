@@ -1,17 +1,12 @@
-# Usa una imagen de Node.js como base
 FROM node
 
-# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el código de la aplicación al contenedor
-COPY . .
-
-# Instala las dependencias
+COPY package*.json ./
 RUN npm install
 
-# Expone el puerto en el que se ejecuta tu aplicación Express
-EXPOSE 80
+COPY . .
 
-#port es una variable de entorno que en www si no se pasa toma el 3000
-ENTRYPOINT PORT=80 npm start
+EXPOSE 90
+
+CMD PORT=90 DATABASE_URL=mongodb://mongo:H2g-GhAbBA53C3bE5BecgA1ffFGD4Bca@roundhouse.proxy.rlwy.net:18499 npm start

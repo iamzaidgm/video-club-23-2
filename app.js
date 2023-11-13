@@ -20,9 +20,11 @@ const mongoose = require('mongoose');
 const app = express();
 
 // mongodb://<dbUser>?:<dbPass>?@<url>:<port>/<dbName>
-const url = "mongodb://localhost:27017/video-club";
+const url = "mongodb://mongo:H2g-GhAbBA53C3bE5BecgA1ffFGD4Bca@roundhouse.proxy.rlwy.net:18499";
 mongoose.connect(url);
+
 const db = mongoose.connection;
+
 db.on('open',()=>{
   console.log("Conexión OK");
 });
